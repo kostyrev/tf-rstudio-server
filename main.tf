@@ -28,8 +28,8 @@ data "aws_security_group" "rstudio" {
 
 resource "aws_spot_instance_request" "rstudio" {
   ami                  = "${data.aws_ami.rstudio.id}"
-  instance_type        = "m4.xlarge"
-  spot_price           = "0.105"
+  instance_type        = "r4.xlarge"
+  spot_price           = "0.0297"
   wait_for_fulfillment = true
   spot_type            = "one-time"
 
