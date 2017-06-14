@@ -36,12 +36,6 @@ resource "aws_spot_instance_request" "rstudio" {
   vpc_security_group_ids = [
     "${data.aws_security_group.rstudio.id}",
   ]
-
-  tag {
-    key                 = "Name"
-    value               = "rstudio"
-    propagate_at_launch = true
-  }
 }
 
 output "public dns" {
