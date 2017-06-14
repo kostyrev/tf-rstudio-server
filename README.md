@@ -26,18 +26,21 @@ EOF
 `TF_VAR_spot_price` is a price you willing to pay for an instance on the spot market.
 Gradually increase this value until you request for instance is fulfilled
 
-export those environment variables by sourcing `.envrc` manually
-```
-. .envrc
-```
+Export those environment variables by sourcing `.envrc` manually  
+`. .envrc`  
 or [install](https://github.com/kostyrev/ansible-role-direnv#install-from-github) [direnv](https://github.com/direnv/direnv) and execute
-```
-direnv allow .
-```
+`direnv allow .`
 
 ### Use terraform to request an instance
+[Install](https://github.com/kostyrev/ansible-role-terraform) [terraform](https://www.terraform.io/)
+`cd terraform`
+Before any operations with terraform run  
+`terraform plan`  
+to verify that terraform will do what you planned it to do.
+
+If everything seems to be ok execute
 ```
-terraform plan
 terraform apply
 ```
+### Demo
 [![asciicast](https://asciinema.org/a/0rvnu96wixgr1hqdk7x0tkzri.png)](https://asciinema.org/a/0rvnu96wixgr1hqdk7x0tkzri)
