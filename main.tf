@@ -37,9 +37,9 @@ resource "aws_spot_instance_request" "rstudio" {
     "${data.aws_security_group.rstudio.id}",
   ]
 
-  tags {
-    Name                = "rstudio"
-    Team                = "DataAnalysts"
+  tag {
+    key                 = "Name"
+    value               = "rstudio"
     propagate_at_launch = true
   }
 }
