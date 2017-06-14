@@ -1,5 +1,18 @@
+variable "region" {
+  type = "string"
+}
+
+variable "spot_price" {
+  type        = "string"
+  description = "The price to request on the spot market"
+}
+
+terraform {
+  required_version = ">= 0.9.4"
+}
+
 provider "aws" {
-  region = "us-east-1"
+  region = "${var.region}"
 }
 
 data "aws_ami" "rstudio" {
@@ -29,7 +42,7 @@ data "aws_security_group" "rstudio" {
 resource "aws_spot_instance_request" "rstudio" {
   ami                  = "${data.aws_ami.rstudio.id}"
   instance_type        = "r4.xlarge"
-  spot_price           = "0.0297"
+  spot_price           = "${var.spot_price}"
   wait_for_fulfillment = true
   spot_type            = "one-time"
 
