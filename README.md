@@ -42,5 +42,10 @@ If everything seems to be ok execute
 ```
 terraform apply
 ```
+
+### Connect to instance
+connect to instance  
+`ssh rstudio@$(terraform output public_address)`  
+
 ### Demo
 [![asciicast](https://asciinema.org/a/0rvnu96wixgr1hqdk7x0tkzri.png)](https://asciinema.org/a/0rvnu96wixgr1hqdk7x0tkzri)

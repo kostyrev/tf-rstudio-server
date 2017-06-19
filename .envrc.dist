@@ -6,3 +6,6 @@ export TF_VAR_spot_price=0.0200
 
 # AWS region to create instances in
 export TF_VAR_region=us-east-1
+
+# The name of ssh key pair
+export TF_VAR_key_name=$(echo $USER)

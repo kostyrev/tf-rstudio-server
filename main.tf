@@ -1,3 +1,12 @@
+variable "key_name" {
+  description = "How to name SSH keypair and security group in AWS."
+}
+
+variable "public_key_path" {
+  description = "Enter the path to the SSH Public Key to add to AWS."
+  default     = "~/.ssh/id_rsa.pub"
+}
+
 variable "region" {
   type = "string"
 }
@@ -35,8 +44,50 @@ data "aws_vpc" "vpc" {
   default = true
 }
 
-data "aws_security_group" "rstudio" {
-  name = "rstudio"
+resource "aws_security_group" "rstudio" {
+  name        = "${format("rstudio-%s", var.key_name)}"
+  description = "Allow ping, ssh and http over 80 port"
+  vpc_id      = "${data.aws_vpc.vpc.id}"
+
+  # Allow echo-requests
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow ssh
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow http
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_key_pair" "ssh-key" {
+  key_name   = "${var.key_name}"
+  public_key = "${file(var.public_key_path)}"
 }
 
 resource "aws_spot_instance_request" "rstudio" {
@@ -46,9 +97,10 @@ resource "aws_spot_instance_request" "rstudio" {
   wait_for_fulfillment        = true
   spot_type                   = "one-time"
   associate_public_ip_address = true
+  key_name                    = "${var.key_name}"
 
   vpc_security_group_ids = [
-    "${data.aws_security_group.rstudio.id}",
+    "${aws_security_group.rstudio.id}",
   ]
 }
 
