@@ -40,11 +40,12 @@ data "aws_security_group" "rstudio" {
 }
 
 resource "aws_spot_instance_request" "rstudio" {
-  ami                  = "${data.aws_ami.rstudio.id}"
-  instance_type        = "r4.xlarge"
-  spot_price           = "${var.spot_price}"
-  wait_for_fulfillment = true
-  spot_type            = "one-time"
+  ami                         = "${data.aws_ami.rstudio.id}"
+  instance_type               = "r4.xlarge"
+  spot_price                  = "${var.spot_price}"
+  wait_for_fulfillment        = true
+  spot_type                   = "one-time"
+  associate_public_ip_address = true
 
   vpc_security_group_ids = [
     "${data.aws_security_group.rstudio.id}",
