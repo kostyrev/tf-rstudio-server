@@ -52,14 +52,14 @@ resource "aws_spot_instance_request" "rstudio" {
   ]
 }
 
-output "public dns" {
+output "public_dns" {
   value = ["${aws_spot_instance_request.rstudio.public_dns}"]
 }
 
-output "public address" {
+output "public_address" {
   value = ["${aws_spot_instance_request.rstudio.public_ip}"]
 }
 
-output "instance type" {
+output "instance_type" {
   value = ["${aws_spot_instance_request.rstudio.instance_type}"]
 }
