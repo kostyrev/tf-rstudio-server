@@ -28,7 +28,7 @@ data "aws_ami" "rstudio" {
     values = ["fasten-RStudio-1.0.143_R-3.4.0_ubuntu-16.04-LTS-64bit"]
   }
 
-  owners = ["762089471837"]
+  owners = ["828328152120"]
 }
 
 data "aws_vpc" "vpc" {
