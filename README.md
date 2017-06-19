@@ -43,8 +43,7 @@ If everything seems to be ok execute
 terraform apply
 ```
 
-### Connect to instance
-connect to instance  
+### Connect to the instance
 `ssh ubuntu@$(terraform output public_address)`  
 
 ### Demo
